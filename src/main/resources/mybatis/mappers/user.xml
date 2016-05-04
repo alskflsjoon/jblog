@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+
+	<select id="insert" parameterType="uservo">
+		<![CDATA[
+			INSERT INTO j_users 
+			values(#{id},#{name},password(#{password}), 
+			now())
+		]]>
+	</select>
+
+
+	<select id="update" parameterType="uservo">
+		<![CDATA[
+			UPDATE j_users 
+			SET id=#{id}, name=#{name}, passwd=password(#{password}), 
+				reg_date=#{regDate}
+		]]>
+	</select>
+
+	<select id="idcheck" resultType="long" parameterType="string">
+		<![CDATA[
+			SELECT count(*) 
+			FROM j_users 
+			WHERE id=#{id}
+		]]>
+	</select>
+
+	<select id="getById" resultType="uservo" parameterType="string">
+		<![CDATA[
+			SELECT *
+			FROM j_users 
+			WHERE id = #{id}
+		]]>
+	</select>
+
+	<select id="getByVo" resultType="uservo" parameterType="uservo">
+		<![CDATA[
+			SELECT id, name 
+			FROM j_users 
+			WHERE id=#{id} and passwd=password(#{password})
+		]]>
+	</select>
+</mapper>
